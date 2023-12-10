@@ -1,0 +1,10 @@
+server:
+  error:
+    # エラー情報をレスポンスしない
+    include-message: never
+    # バリデーションエラー・反感エラーはレスポンスする
+    include-binding-errors: always
+    # 例外情報をレスポンスしない
+    include-exception: true
+    # 例外のTraceをレスポンスしない
+    include-stacktrace: never

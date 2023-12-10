@@ -1,0 +1,17 @@
+def checkstyleCommonDir="$rootDir/gradle-settings/config/checkstyle"
+	if (file(checkstyleCommonDir).exists()) {
+		println 'use same checkstyle config'
+	} else{
+		println 'use common checkstyle config'
+		checkstyleCommonDir="${rootProject.rootDir}/odpj-api-common/gradle-settings/config/checkstyle"
+	}
+	if(!file("$checkstyleCommonDir/checkstyle.xml").exists()){
+		println 'download checkstyle config'
+		new URL('https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/google_checks.xml')
+			.withInputStream{ i -> file("$checkstyleCommonDir/checkstyle.xml").withOutputStream{ it << i }}
+	}
+checkstyle {
+	// https://github.com/checkstyle/checkstyle/releases/
+	toolVersion='10.4'
+	configDirectory=file("$checkstyleCommonDir")
+}

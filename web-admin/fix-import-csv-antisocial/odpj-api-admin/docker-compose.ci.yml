@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  api-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      cache_from:
+        - "${API_SERVICE_IMAGE}"
+    image: "${API_SERVICE_IMAGE}"
+    env_file: .env
+    ports:
+      - "8083:8083"
+
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://localhost:12201"
+        tag: "api-admin"

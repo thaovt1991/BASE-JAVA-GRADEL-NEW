@@ -1,0 +1,251 @@
+okasan:
+  common:
+    configurable-validator:
+      rules:
+        # Dto/Bean_class_name:
+        #   field_name1:
+        #     - annotation:　constraint_annotation_class_name (ex: javax.validation.constraints.NotNull)
+        #     - message: custom_error_message (option)
+        #     - other_annotation_property1: 10
+        UserRequestImage:
+          identityDocumentsSeqNo:
+            - annotation: javax.validation.constraints.NotNull
+          clientNo:
+            - annotation: javax.validation.constraints.NotNull
+          identityDocumentsType:
+          imageData1:
+          imageData2:
+          createDate:
+          createPrgId:
+
+        # the settings below are used in DemoController, which show how the validator work
+        DemoParam:
+          username:
+            - annotation: javax.validation.constraints.NotNull
+              message: "Hãy nhập giá trị cho username"
+            - annotation: org.hibernate.validator.constraints.Length
+              message: "username phải có từ 3 ký tự trở lên"
+              min: 3
+          email:
+            - annotation: javax.validation.constraints.NotEmpty
+            - annotation: javax.validation.constraints.Email
+          nestedValue:
+            number:
+              - annotation: javax.validation.constraints.Max
+                value: 5
+                message: "number phải nhỏ hơn hoặc bằng 5"
+              - annotation: javax.validation.constraints.Min
+                value: 4
+                message: "number phải lớn hơn hoặc bằng 4"
+              - annotation: javax.validation.constraints.NotNull
+
+          ExportCsvBondsDetailParam:
+            issueCd:
+              - annotation: javax.validation.constraints.Max
+                value: 9
+                message: "This field max is 9"
+              - annotation: javax.validation.constraints.NotNull
+                message: "This field can not be null"
+            branchCd:
+              - annotation: javax.validation.constraints.Max
+                value: 999999999999
+                message: "This field max is 999999999999"
+              - annotation: javax.validation.constraints.NotNull
+                message: "This field can not be null"
+
+        CheckAvaiableTradingBondParam:
+          clientCdOut:
+            - annotation: javax.validation.constraints.NotNull
+              message: "Please enter a value for clientCdOut"
+          clientCdIn:
+            - annotation: javax.validation.constraints.NotNull
+              message: "Please enter a value for clientCdIn"
+          marketCd:
+            - annotation: javax.validation.constraints.NotNull
+              message: "Please enter a value for marketCd"
+
+        InsertBranchInfoParam:
+          branchCd:
+            - annotation: javax.validation.constraints.NotNull
+              message: "Please enter a value for BranchCd"
+            - annotation: javax.validation.constraints.Max
+              value: 1000
+              message: "BranchCd up to 3 characters"
+          branchNm:
+            - annotation: org.hibernate.validator.constraints.Length
+              max: 100
+              message: "BranchNm up to 100 characters"
+
+        # GetLockInfoParam validate
+        GetLockInfoParam:
+          branchCd:
+            - annotation: javax.validation.constraints.Max
+              value: 999
+              message: "Max is less than 999"
+            - annotation: javax.validation.NotNull
+              message: "This filed can be not null"
+          customerCd:
+            - annotation: javax.validation.constraints.Max
+              value: 99999999
+              message: "Max is less than 99999999"
+            - annotation: javax.validation.NotNull
+              message: "This filed can be not null"
+
+        # the setting below are used in GetDividendInquiryParam
+        GetDividendInquiryParam:
+          issueCd:
+            - annotation: javax.validation.constraints.NotEmpty
+            - annotation: org.hibernate.validator.constraints.Length
+              message: "issueCd phải có từ 1 đến 12 ký tự "
+              min: 1
+              max: 12
+          fromDate:
+            - annotation: javax.validation.constraints.NotEmpty
+            - annotation: org.hibernate.validator.constraints.Length
+              message: "fromDate phải có 8 ký tự "
+              min: 8
+              max: 8
+          toDate:
+            - annotation: javax.validation.constraints.NotEmpty
+            - annotation: org.hibernate.validator.constraints.Length
+              message: "toDate phải có 8 ký tự "
+              min: 8
+              max: 8
+          pageNumber:
+            - annotation: javax.validation.constraints.NotNull
+            - annotation: javax.validation.constraints.Min
+              value: 1
+          pageSize:
+            - annotation: javax.validation.constraints.NotNull
+            - annotation: javax.validation.constraints.Min
+              value: 1
+        UpdateFundStdPriceParam:
+          issueCd:
+            - annotation: javax.validation.constraints.NotNull
+          stdPrice:
+            - annotation: javax.validation.constraints.NotNull
+        TradeInquiryRequest:
+          class:
+            - annotation: jp.co.okasan.core.validator.configuable.custom.DateRange
+              fieldDateFrom: dateFrom
+              fieldDateTo: dateTo
+              message: "Start date must be before end date"
+          branchCd:
+            - annotation: javax.validation.constraints.Max
+              value: 999
+            - annotation: javax.validation.constraints.Min
+              value: 1
+          customerCd:
+            - annotation: javax.validation.constraints.Max
+              value: 99999999
+            - annotation: javax.validation.constraints.Min
+              value: 1
+          issueCd:
+            - annotation: org.hibernate.validator.constraints.Length
+              min: 1
+              max: 12
+          tradeTypeCd:
+            - annotation: javax.validation.constraints.Max
+              value: 9
+            - annotation: javax.validation.constraints.Min
+              value: 1
+        UserInfoParam:
+          searchFlg:
+            - annotation: javax.validation.constraints.NotNull
+              message: "Please enter a value for searchFlg"
+          userCd:
+            - annotation: javax.validation.constraints.Min
+              value: 100000
+              message: "Please enter a value from 100000 to 999999"
+            - annotation: javax.validation.constraints.Max
+              value: 999999
+              message: "Please enter a value from 100000 to 999999"
+          userNm:
+            - annotation: org.hibernate.validator.constraints.Length
+              max: 100
+              message: "Please enter a value less 100 digits"
+
+        UpdateUserRequestImageParam:
+          entryNo:
+            - annotation: javax.validation.constraints.NotNull
+              message: "Please enter a value for entryNo"
+
+        # Update-my-number param validate
+        UpdateMyNumberRequest:
+          companyCd:
+            - annotation: javax.validation.constraints.NotEmpty
+            - annotation: org.hibernate.validator.constraints.Length
+              max: 8
+              message: "Please enter a value less 8 digits"
+          entryNo:
+            - annotation: javax.validation.constraints.NotEmpty
+          clientNo:
+            - annotation: javax.validation.constraints.NotEmpty
+          personalNo:
+            - annotation: org.hibernate.validator.constraints.Length
+              max: 20
+              message: "Please enter a value less 20 digits"
+          myNumberDocumentType:
+            - annotation: org.hibernate.validator.constraints.Length
+              max: 1
+              message: "Please enter a value less 1 digits"
+          myNumberStatus:
+            - annotation: org.hibernate.validator.constraints.Length
+              max: 1
+              message: "Please enter a value less 1 digits"
+          statusUser:
+            - annotation: org.hibernate.validator.constraints.Length
+              max: 20
+              message: "Please enter a value less 20 digits"
+          reUploadStatus:
+            - annotation: org.hibernate.validator.constraints.Length
+              max: 1
+              message: "Please enter a value less 1 digits"
+
+        SaveUserRequest:
+          userCd:
+            - annotation: javax.validation.constraints.NotNull
+            - annotation: org.hibernate.validator.constraints.Length
+              min: 6
+              max: 6
+          corpCd:
+            - annotation: javax.validation.constraints.NotNull
+            - annotation: org.hibernate.validator.constraints.Length
+              min: 5
+              max: 5
+          branchCd:
+            - annotation: javax.validation.constraints.NotNull
+            - annotation: org.hibernate.validator.constraints.Length
+              min: 5
+              max: 5
+          roleCd:
+            - annotation: javax.validation.constraints.NotNull
+            - annotation: org.hibernate.validator.constraints.Length
+              min: 2
+              max: 2
+          traderCd:
+            - annotation: javax.validation.constraints.NotNull
+            - annotation: org.hibernate.validator.constraints.Length
+              min: 6
+              max: 6
+          userNm:
+            - annotation: javax.validation.constraints.NotNull
+          userNmKana:
+            - annotation: javax.validation.constraints.NotNull
+          password:
+            - annotation: javax.validation.constraints.NotNull
+          pinNo:
+            - annotation: javax.validation.constraints.NotNull
+            - annotation: org.hibernate.validator.constraints.Length
+              min: 4
+              max: 4
+          # TODO [TQVu][QA-No7] Confirming format datetime
+          #startDt:
+          #  - annotation: javax.validation.constraints.NotNull
+          #endDt:
+          #  - annotation: javax.validation.constraints.NotNull
+          deleteFlg:
+            - annotation: org.hibernate.validator.constraints.Length
+              min: 1
+              max: 1
+

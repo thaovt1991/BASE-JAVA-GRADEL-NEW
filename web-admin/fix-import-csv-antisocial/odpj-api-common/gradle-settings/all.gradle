@@ -1,0 +1,12 @@
+def commonGradleDir="$rootDir/gradle-settings/"
+if (file("$commonGradleDir/test.gradle").exists()) {
+	println 'use same config'
+} else{
+	println 'use common config'
+	commonGradleDir="${rootProject.rootDir}/odpj-api-common/gradle-settings/"
+}
+
+apply from: "$commonGradleDir/test.gradle"
+apply from: "$commonGradleDir/checkstyle.gradle"
+apply from: "$commonGradleDir/spotless.gradle"
+apply from: "$commonGradleDir/spotbugs.gradle"

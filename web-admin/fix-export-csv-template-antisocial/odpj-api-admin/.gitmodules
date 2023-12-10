@@ -1,0 +1,9 @@
+[submodule "odpj-api-common"]
+	path = odpj-api-common
+	url = ../odpj-api-common.git
+[submodule "odpj-api-common-entity"]
+	path = odpj-api-common-entity
+	url = ../odpj-api-common-entity.git
+[submodule "odpj-gradle-settings"]
+	path = odpj-gradle-settings
+	url = ../odpj-gradle-settings.git

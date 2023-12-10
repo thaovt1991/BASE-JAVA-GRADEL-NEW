@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  api-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env.sample
+    ports:
+      - "8083:8083"
+
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://localhost:12201"
+        tag: "api-admin"

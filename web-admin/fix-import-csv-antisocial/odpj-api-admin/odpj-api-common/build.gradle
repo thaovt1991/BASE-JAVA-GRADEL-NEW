@@ -1,0 +1,56 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.5'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'java'
+	id 'jacoco'
+	id 'checkstyle'
+	id 'com.diffplug.spotless' version '6.11.0'
+	id 'com.github.spotbugs' version '5.0.13'
+	id 'eclipse'
+}
+
+group = 'jp.co.okasan'
+sourceCompatibility = '17'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// spring boot 
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+	implementation group: 'com.univocity', name: 'univocity-parsers', version: '2.7.3'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+	implementation group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.12.331'
+	implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+
+	// lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// DB
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// redis
+	compileOnly 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	// test
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//Open CSV
+	implementation  'com.opencsv:opencsv:5.7.1'
+}
+bootJar{
+	enabled = false
+}
+
+apply from: "$rootProject.rootDir/gradle-settings/all.gradle"
+

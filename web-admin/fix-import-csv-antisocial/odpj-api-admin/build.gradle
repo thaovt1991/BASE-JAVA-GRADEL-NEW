@@ -1,0 +1,95 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.5'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'java'
+    id 'jacoco'
+    id 'checkstyle'
+    id 'com.diffplug.spotless' version '6.11.0'
+    id 'com.github.spotbugs' version '5.0.13'
+    id 'eclipse'
+}
+
+group = 'jp.co.okasan'
+sourceCompatibility = '17'
+
+ext {
+    queryDslVersion = '5.0.0'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs += 'odpj-api-common-entity/build/generated/sources/annotationProcessor/java/main'
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // spring boot
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation group: 'com.univocity', name: 'univocity-parsers', version: '2.7.3'
+    // db
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // apache common
+    implementation 'org.apache.commons:commons-lang3'
+    implementation 'org.apache.commons:commons-collections4:4.4'
+
+    // entity dto mapping
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    implementation 'io.springfox:springfox-swagger2:3.0.0'
+    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+    // common
+    implementation(project(':odpj-api-common'))
+    implementation(project(':odpj-api-common-entity'))
+
+    // redis
+    runtimeOnly 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    // pool
+    implementation 'org.apache.commons:commons-pool2'
+
+    // csv
+    implementation  'com.opencsv:opencsv:5.7.1'
+
+    // JDBC logging
+    implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16'
+
+    // test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly("com.h2database:h2")
+
+    // querydsl
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    annotationProcessor(
+            "com.querydsl:querydsl-apt:${queryDslVersion}:jpa",
+            "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.2.Final",
+            "javax.annotation:javax.annotation-api:1.3.2",
+            "org.projectlombok:lombok"
+    )
+
+    implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
+}
+
+apply from: "$projectDir/gradle-settings/all.gradle"

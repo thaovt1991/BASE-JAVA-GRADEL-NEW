@@ -1,0 +1,20 @@
+spotbugs {
+    setIgnoreFailures(true)
+}
+spotbugsMain {
+    reports {
+        html {
+            required = true
+            stylesheet = 'fancy-hist.xsl'
+        }
+    }
+}
+
+spotbugsTest {
+    reports {
+        html {
+            required = true
+            stylesheet = 'fancy-hist.xsl'
+        }
+    }
+}

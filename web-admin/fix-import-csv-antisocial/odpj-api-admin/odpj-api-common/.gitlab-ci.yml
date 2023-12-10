@@ -1,0 +1,45 @@
+image:
+  name: docker/compose:1.29.2
+  entrypoint: [""]
+
+services:
+  - docker:dind
+
+variables:
+  DOCKER_REGISTRY: 806209757177.dkr.ecr.ap-northeast-1.amazonaws.com
+  AWS_DEFAULT_REGION: ap-northeast-1
+  APP_NAME: odpj-api-common
+
+stages:
+  - build
+  - push_artifact
+  - deploy
+
+before_script:
+  - echo "Script before execute job"
+  # - apk add --no-cache curl jq python3 py3-pip
+  # - pip install awscli
+
+build:
+  stage: build
+  script:
+    - docker-compose -f docker-compose.ci.yml build
+
+.push_artifact:
+  stage: push_artifact
+  rules:
+    - if: '$CI_COMMIT_REF_PROTECTED == "true"'
+
+  script:
+    - echo "Run image, copy built and push to s3 bucket"
+
+.deploy:
+  stage: deploy    
+  script:
+    - echo "Deploying"
+  only:
+    - ci-cd/**
+    - develop
+
+
+   

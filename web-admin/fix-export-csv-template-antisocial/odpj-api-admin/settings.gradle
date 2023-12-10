@@ -1,0 +1,5 @@
+rootProject.name = 'odpj-admin-backend'
+include ':odpj-api-common'
+include ':odpj-api-common-entity'
+project(':odpj-api-common').projectDir = new File('./odpj-api-common')
+project(':odpj-api-common-entity').projectDir = new File('./odpj-api-common-entity')

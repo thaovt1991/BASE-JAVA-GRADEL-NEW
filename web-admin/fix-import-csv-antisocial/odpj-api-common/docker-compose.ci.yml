@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  api-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      cache_from:
+        - "odpj-api-common"
+    image: "odpj-api-common"
+    container_name: "odpj-api-common"

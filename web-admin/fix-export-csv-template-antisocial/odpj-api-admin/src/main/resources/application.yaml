@@ -1,0 +1,74 @@
+# this file is place to declare app's settings with values of the production environment
+# the variables with other values in the local/dev environments can be (and should be)
+# define in environment variable(by docker script or ide settings)
+# this setting
+spring:
+  config:
+    import:
+      - 'application-error.yaml' # default error handling
+      - 'application-validator.yaml' # define for validator
+      - 'mail-config.yaml' # define for mail configuration
+  jackson:
+    property-naming-strategy: SNAKE_CASE # entity/response は snack_caseにする
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: jp.co.okasan.core.convertor.jpa.UpperCaseNamingStrategy
+    properties:
+      javax:
+        persistence:
+          validation:
+            mode: none # disable entity validation
+  datasource:
+      url: "${DATABASE_PROTOCOL:jdbc:log4jdbc:mysql}://${MYSQL_HOST:18.177.168.113}:${DATABASE_PORT:3306}/${DATABASE_NAME:okasan_db2}"
+      username: "root"
+      password: "ZP#Zv%mrQPzZvNa4"
+      driver-class-name: ${DRIVER_CLASS_NAME:net.sf.log4jdbc.sql.jdbcapi.DriverSpy}
+      type: 'com.zaxxer.hikari.HikariDataSource'
+      hikari:
+#        maximum-pool-size: 20
+#        minimum-idle: 10
+          dataSourceProperties: # https://github.com/brettwooldridge/HikariCP/wiki/MySQL-Configuration
+            cachePrepStmts: true
+            prepStmtCacheSize: 250
+            prepStmtCacheSqlLimit: 2048
+            useServerPrepStmts: true
+            useLocalSessionState: true
+            rewriteBatchedStatements: true
+            cacheResultSetMetadata: true
+            cacheServerConfiguration: true
+            elideSetAutoCommits: true
+            maintainTimeStats: false
+  redis:
+    host: 18.177.168.113
+    port: 6379
+    password: TXM#gGSIU#8Ed8e99Gjw
+    database: 0
+    pool:
+      max-idle: 8
+      min-idle: 0
+      max-active: 8
+      max-wait: -1
+
+server:
+  port: 8083
+  servlet:
+    context-path: '/api/v1'
+  compression:
+    enabled: true
+    mime-types:
+      - text/html
+      - text/xml
+      - text/plain
+      - text/css
+      - text/javascript
+      - application/javascript
+      - application/json
+    min-response-size: 1024
+    max-http-header-size: 10000000
+
+cors:
+  allows:
+    origin: ${CORS_ALLOWS_DOMAIN:http://localhost:3000,https://admin.vnzdev.site}
